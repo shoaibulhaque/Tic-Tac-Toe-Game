@@ -33,6 +33,9 @@ def enter_move(board, filled_index, eq_values):
       
 
 def victory_for(board, sgn):
+
+  temp = 2
+
   if sgn == "X":	# are we looking for X?
     who = 'me'	# yes - it's computer's side
   elif sgn == "O": # ... or for O?
@@ -40,6 +43,7 @@ def victory_for(board, sgn):
   else:
     who = None	# we should not fall here!
   cross1 = cross2 = True  # for diagonals
+
   for rc in range(3):
     if board[rc][0] == sgn and board[rc][1] == sgn and board[rc][2] == sgn:	# check row rc
       return who
@@ -47,7 +51,8 @@ def victory_for(board, sgn):
       return who
     if board[rc][rc] != sgn: # check 1st diagonal
       cross1 = False
-    if board[2 - rc][2 - rc] != sgn: # check 2nd diagonal
+    if board[rc][2 - rc] != sgn: # check 2nd diagonal
+      temp = temp - 1
       cross2 = False
   if cross1 or cross2:
     return who
@@ -60,7 +65,7 @@ def victory_for(board, sgn):
 def draw_move(board, filled_index,eq_values):
 
   while True:
-    print("draw_move")
+
     comp_move = randrange(1, 10)
     if comp_move not in filled_index.keys():
       row, col = eq_values[comp_move]
